@@ -8,6 +8,7 @@ using namespace std;
 string LCS(string s1, string s2){
     int n = s1.length();
     int m = s2.length();
+    
     vector<vector<int>>dp(n + 1, vector<int>(m + 1, 0));
 
     for(int i = 0; i <= n; i++){
