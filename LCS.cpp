@@ -1,14 +1,29 @@
-#include <bits/stdc++.h>
+#include<iostream>
+#include<vector>
+#include<string>
+#include<algorithm>
+#include<iomanip>
+
 using namespace std;
 
-string LCS(string s1, string s2) {
+string LCS(string s1, string s2){
     int n = s1.length();
     int m = s2.length();
 
-    vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
+    vector<vector<int>>dp(n + 1, vector<int>(m + 1, 0));
 
-    for(int i = 1; i <= n; i++){
-        for(int j = 1; j <= m; j++){
+    for(int i = 0; i <= n; i++){
+        dp[i][0] = 0;
+    }
+
+    for(int j = 0; j <= m; j++){
+        dp[0][j] = 0;
+    }
+
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= m; j++)
+        {
             if(s1[i - 1] == s2[j - 1]){
                 dp[i][j] = dp[i - 1][j - 1] + 1;
             }
@@ -16,18 +31,37 @@ string LCS(string s1, string s2) {
                 dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
             }
         }
+        
+    }
+    
+    cout << "    -";
+    for(int j = 0; j < m; j++){
+        cout << setw(4) << s2[j];
+    }
+    cout << endl;
+    for(int i = 0; i <= n; i++){
+        if(i == 0){
+            cout << "    -";
+        }
+        else{
+            cout << "    " << s1[i - 1];
+        }
+        for(int j = 0; j <= m; j++){
+            cout << setw(4) << dp[i][j];
+        }
+        cout << endl;
     }
 
     string lcs = "";
     int i = n, j = m;
 
-    while (i > 0 && j > 0){
-        if (s1[i - 1] == s2[j - 1]){
+    while(i > 0 && j > 0){
+        if(s1[i - 1] == s2[j - 1]){
             lcs += s1[i - 1];
             i--;
             j--;
         }
-        else if (dp[i - 1][j] > dp[i][j - 1]){
+        else if(dp[i - 1][j] > dp[i][j - 1]){
             i--;
         }
         else{
@@ -39,13 +73,12 @@ string LCS(string s1, string s2) {
     return lcs;
 }
 
-int main() {
-    string str1, str2;
+int main(){
+    string s1, s2;
+    cin >> s1;
+    cin >> s2;
 
-    cin >> str1;
-    cin >> str2;
-
-    string result = LCS(str1, str2);
+    string result = LCS(s1, s2);
 
     cout << "Length = " << result.length() << endl;
     cout << "LCS = " << result << endl;
