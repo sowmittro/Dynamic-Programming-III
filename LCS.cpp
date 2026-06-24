@@ -3,7 +3,6 @@
 #include<string>
 #include<algorithm>
 #include<iomanip>
-
 using namespace std;
 
 string LCS(string s1, string s2){
